@@ -16,8 +16,8 @@ public class EmpleadoService {
         this.empleadoRepository = empleadoRepository;
     }
 
-    public Empleado insertarEmpleado(Empleado empleado) {
+    public Empleado insertarEmpleado(Empleado e) {
         // Aquí se puede añadir lógica adicional si es necesario
-        return empleadoRepository.save(empleado);
+        return empleadoRepository.save(e);
     }
 }

@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EmpleadoRepository extends JpaRepository<Empleado, Integer> {
     // No es necesario definir el método save, JpaRepository ya lo provee
+
+    Empleado save(Empleado e);
 }
 
