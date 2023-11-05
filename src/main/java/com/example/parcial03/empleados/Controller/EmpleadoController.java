@@ -1,26 +1,51 @@
 package com.example.parcial03.empleados.Controller;
 
 
+import java.util.List;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.parcial03.empleados.Model.Empleado;
-import com.example.parcial03.empleados.Service.EmpleadoService;
+import com.example.parcial03.empleados.Repository.EmpleadoRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/empleados")
+@RequestMapping("/empleado")
+@RequiredArgsConstructor
+
 public class EmpleadoController {
 
-    private final EmpleadoService empleadoService;
 
     @Autowired
-    public EmpleadoController(EmpleadoService empleadoService) {
-        this.empleadoService = empleadoService;
+    private EmpleadoRepository repo;
+
+    @GetMapping("/get")
+    public List<Empleado> getEmpleado() {
+
+        return  repo.findAll();
     }
 
-    @PostMapping
-    public ResponseEntity<Empleado> crearEmpleado(@RequestBody Empleado empleado) {
-        Empleado nuevoEmpleado = empleadoService.insertarEmpleado(empleado);
-        return ResponseEntity.ok(nuevoEmpleado);
+    @PostMapping("/create")
+    public Empleado createEmpleado (@RequestBody Empleado empleado) {
+
+        return repo.save(empleado);
     }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public String deleteEmpleado (@PathVariable Integer id) {
+
+        repo.deleteById(id);;
+
+        return "El Empleado se ha eliminado Correctamente";
+    }
+
 }
